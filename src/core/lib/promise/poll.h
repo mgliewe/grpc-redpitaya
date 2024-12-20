@@ -31,7 +31,7 @@ namespace grpc_core {
 // Allows writing 'return Pending{}' and with automatic conversions gets
 // upgraded to a Poll<> object.
 struct Pending {};
-GPR_ATTRIBUTE_ALWAYS_INLINE_FUNCTION inline bool operator==(const Pending&,
+GPR_ATTRIBUTE_ALWAYS_INLINE_FUNCTION bool operator==(const Pending&,
                                                             const Pending&) {
   return true;
 }
@@ -39,7 +39,7 @@ GPR_ATTRIBUTE_ALWAYS_INLINE_FUNCTION inline bool operator==(const Pending&,
 // A type that contains no value. Useful for simulating 'void' in promises that
 // always need to return some kind of value.
 struct Empty {};
-GPR_ATTRIBUTE_ALWAYS_INLINE_FUNCTION inline bool operator==(const Empty&,
+GPR_ATTRIBUTE_ALWAYS_INLINE_FUNCTION bool operator==(const Empty&,
                                                             const Empty&) {
   return true;
 }
@@ -222,8 +222,8 @@ struct PollTraits<Poll<T>> {
 };
 
 template <typename T>
-GPR_ATTRIBUTE_ALWAYS_INLINE_FUNCTION inline bool operator==(const Poll<T>& a,
-                                                            const Poll<T>& b) {
+GPR_ATTRIBUTE_ALWAYS_INLINE_FUNCTION bool operator==(const Poll<T>& a,
+                                                     const Poll<T>& b) {
   if (a.pending() && b.pending()) return true;
   if (a.ready() && b.ready()) return a.value() == b.value();
   return false;
@@ -262,7 +262,7 @@ struct PollCastImpl<T, Poll<T>> {
 };
 
 template <typename T, typename U>
-GPR_ATTRIBUTE_ALWAYS_INLINE_FUNCTION inline Poll<T> poll_cast(U poll) {
+GPR_ATTRIBUTE_ALWAYS_INLINE_FUNCTION Poll<T> poll_cast(U poll) {
   return PollCastImpl<T, U>::Cast(std::move(poll));
 }
 

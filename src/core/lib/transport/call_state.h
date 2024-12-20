@@ -322,7 +322,7 @@ class CallState {
   IntraActivityWaiter server_trailing_metadata_waiter_;
 };
 
-GPR_ATTRIBUTE_ALWAYS_INLINE_FUNCTION inline CallState::CallState()
+GPR_ATTRIBUTE_ALWAYS_INLINE_FUNCTION CallState::CallState()
     : client_to_server_pull_state_(ClientToServerPullState::kBegin),
       client_to_server_push_state_(ClientToServerPushState::kIdle),
       server_to_client_pull_state_(ServerToClientPullState::kUnstarted),
@@ -330,7 +330,7 @@ GPR_ATTRIBUTE_ALWAYS_INLINE_FUNCTION inline CallState::CallState()
       server_trailing_metadata_state_(ServerTrailingMetadataState::kNotPushed) {
 }
 
-GPR_ATTRIBUTE_ALWAYS_INLINE_FUNCTION inline void CallState::Start() {
+GPR_ATTRIBUTE_ALWAYS_INLINE_FUNCTION void CallState::Start() {
   GRPC_TRACE_LOG(call_state, INFO)
       << "[call_state] Start: "
       << GRPC_DUMP_ARGS(this, server_to_client_pull_state_);
@@ -356,12 +356,11 @@ GPR_ATTRIBUTE_ALWAYS_INLINE_FUNCTION inline void CallState::Start() {
   }
 }
 
-GPR_ATTRIBUTE_ALWAYS_INLINE_FUNCTION inline void
+GPR_ATTRIBUTE_ALWAYS_INLINE_FUNCTION void
 CallState::BeginPushClientToServerMessage() {
   GRPC_TRACE_LOG(call_state, INFO)
       << "[call_state] BeginPushClientToServerMessage: "
-      << GRPC_DUMP_ARGS(this, client_to_server_push_state_,
-                        client_to_server_push_waiter_);
+      << GRPC_DUMP_ARGS(this, client_to_server_push_state_);
   switch (client_to_server_push_state_) {
     case ClientToServerPushState::kIdle:
       client_to_server_push_state_ = ClientToServerPushState::kPushedMessage;
@@ -379,7 +378,7 @@ CallState::BeginPushClientToServerMessage() {
   }
 }
 
-GPR_ATTRIBUTE_ALWAYS_INLINE_FUNCTION inline Poll<StatusFlag>
+GPR_ATTRIBUTE_ALWAYS_INLINE_FUNCTION Poll<StatusFlag>
 CallState::PollPushClientToServerMessage() {
   GRPC_TRACE_LOG(call_state, INFO)
       << "[call_state] PollPushClientToServerMessage: "
@@ -397,7 +396,7 @@ CallState::PollPushClientToServerMessage() {
   Crash("Unreachable");
 }
 
-GPR_ATTRIBUTE_ALWAYS_INLINE_FUNCTION inline void
+GPR_ATTRIBUTE_ALWAYS_INLINE_FUNCTION void
 CallState::ClientToServerHalfClose() {
   GRPC_TRACE_LOG(call_state, INFO)
       << "[call_state] ClientToServerHalfClose: "
@@ -420,7 +419,7 @@ CallState::ClientToServerHalfClose() {
   }
 }
 
-GPR_ATTRIBUTE_ALWAYS_INLINE_FUNCTION inline void
+GPR_ATTRIBUTE_ALWAYS_INLINE_FUNCTION void
 CallState::BeginPullClientInitialMetadata() {
   GRPC_TRACE_LOG(call_state, INFO)
       << "[call_state] BeginPullClientInitialMetadata: "
@@ -441,7 +440,7 @@ CallState::BeginPullClientInitialMetadata() {
   }
 }
 
-GPR_ATTRIBUTE_ALWAYS_INLINE_FUNCTION inline void
+GPR_ATTRIBUTE_ALWAYS_INLINE_FUNCTION void
 CallState::FinishPullClientInitialMetadata() {
   GRPC_TRACE_LOG(call_state, INFO)
       << "[call_state] FinishPullClientInitialMetadata: "
@@ -464,7 +463,7 @@ CallState::FinishPullClientInitialMetadata() {
   }
 }
 
-GPR_ATTRIBUTE_ALWAYS_INLINE_FUNCTION inline Poll<ValueOrFailure<bool>>
+GPR_ATTRIBUTE_ALWAYS_INLINE_FUNCTION Poll<ValueOrFailure<bool>>
 CallState::PollPullClientToServerMessageAvailable() {
   GRPC_TRACE_LOG(call_state, INFO)
       << "[call_state] PollPullClientToServerMessageAvailable: "
@@ -505,7 +504,7 @@ CallState::PollPullClientToServerMessageAvailable() {
   Crash("Unreachable");
 }
 
-GPR_ATTRIBUTE_ALWAYS_INLINE_FUNCTION inline Poll<StatusFlag>
+GPR_ATTRIBUTE_ALWAYS_INLINE_FUNCTION Poll<StatusFlag>
 CallState::PollPullClientToServerMessageStarted() {
   GRPC_TRACE_LOG(call_state, INFO)
       << "[call_state] PollPullClientToServerMessageStarted: "
@@ -524,7 +523,7 @@ CallState::PollPullClientToServerMessageStarted() {
   Crash("Unreachable");
 }
 
-GPR_ATTRIBUTE_ALWAYS_INLINE_FUNCTION inline void
+GPR_ATTRIBUTE_ALWAYS_INLINE_FUNCTION void
 CallState::FinishPullClientToServerMessage() {
   GRPC_TRACE_LOG(call_state, INFO)
       << "[call_state] FinishPullClientToServerMessage: "
@@ -567,7 +566,7 @@ CallState::FinishPullClientToServerMessage() {
   }
 }
 
-GPR_ATTRIBUTE_ALWAYS_INLINE_FUNCTION inline StatusFlag
+GPR_ATTRIBUTE_ALWAYS_INLINE_FUNCTION StatusFlag
 CallState::PushServerInitialMetadata() {
   GRPC_TRACE_LOG(call_state, INFO)
       << "[call_state] PushServerInitialMetadata: "
@@ -584,7 +583,7 @@ CallState::PushServerInitialMetadata() {
   return Success{};
 }
 
-GPR_ATTRIBUTE_ALWAYS_INLINE_FUNCTION inline void
+GPR_ATTRIBUTE_ALWAYS_INLINE_FUNCTION void
 CallState::BeginPushServerToClientMessage() {
   GRPC_TRACE_LOG(call_state, INFO)
       << "[call_state] BeginPushServerToClientMessage: "
@@ -614,7 +613,7 @@ CallState::BeginPushServerToClientMessage() {
   }
 }
 
-GPR_ATTRIBUTE_ALWAYS_INLINE_FUNCTION inline Poll<StatusFlag>
+GPR_ATTRIBUTE_ALWAYS_INLINE_FUNCTION Poll<StatusFlag>
 CallState::PollPushServerToClientMessage() {
   GRPC_TRACE_LOG(call_state, INFO)
       << "[call_state] PollPushServerToClientMessage: "
@@ -637,7 +636,7 @@ CallState::PollPushServerToClientMessage() {
   Crash("Unreachable");
 }
 
-GPR_ATTRIBUTE_ALWAYS_INLINE_FUNCTION inline bool
+GPR_ATTRIBUTE_ALWAYS_INLINE_FUNCTION bool
 CallState::PushServerTrailingMetadata(bool cancel) {
   GRPC_TRACE_LOG(call_state, INFO)
       << "[call_state] PushServerTrailingMetadata: "
@@ -693,7 +692,7 @@ CallState::PushServerTrailingMetadata(bool cancel) {
   return true;
 }
 
-GPR_ATTRIBUTE_ALWAYS_INLINE_FUNCTION inline Poll<bool>
+GPR_ATTRIBUTE_ALWAYS_INLINE_FUNCTION Poll<bool>
 CallState::PollPullServerInitialMetadataAvailable() {
   GRPC_TRACE_LOG(call_state, INFO)
       << "[call_state] PollPullServerInitialMetadataAvailable: "
@@ -754,7 +753,7 @@ CallState::PollPullServerInitialMetadataAvailable() {
   Crash("Unreachable");
 }
 
-GPR_ATTRIBUTE_ALWAYS_INLINE_FUNCTION inline void
+GPR_ATTRIBUTE_ALWAYS_INLINE_FUNCTION void
 CallState::FinishPullServerInitialMetadata() {
   GRPC_TRACE_LOG(call_state, INFO)
       << "[call_state] FinishPullServerInitialMetadata: "
@@ -806,7 +805,7 @@ CallState::FinishPullServerInitialMetadata() {
   }
 }
 
-GPR_ATTRIBUTE_ALWAYS_INLINE_FUNCTION inline Poll<ValueOrFailure<bool>>
+GPR_ATTRIBUTE_ALWAYS_INLINE_FUNCTION Poll<ValueOrFailure<bool>>
 CallState::PollPullServerToClientMessageAvailable() {
   GRPC_TRACE_LOG(call_state, INFO)
       << "[call_state] PollPullServerToClientMessageAvailable: "
@@ -875,7 +874,7 @@ CallState::PollPullServerToClientMessageAvailable() {
   Crash("Unreachable");
 }
 
-GPR_ATTRIBUTE_ALWAYS_INLINE_FUNCTION inline Poll<StatusFlag>
+GPR_ATTRIBUTE_ALWAYS_INLINE_FUNCTION Poll<StatusFlag>
 CallState::PollPullServerToClientMessageStarted() {
   GRPC_TRACE_LOG(call_state, INFO)
       << "[call_state] PollPullClientToServerMessageStarted: "
@@ -898,7 +897,7 @@ CallState::PollPullServerToClientMessageStarted() {
   Crash("Unreachable");
 }
 
-GPR_ATTRIBUTE_ALWAYS_INLINE_FUNCTION inline void
+GPR_ATTRIBUTE_ALWAYS_INLINE_FUNCTION void
 CallState::FinishPullServerToClientMessage() {
   GRPC_TRACE_LOG(call_state, INFO)
       << "[call_state] FinishPullServerToClientMessage: "
@@ -945,7 +944,7 @@ CallState::FinishPullServerToClientMessage() {
   }
 }
 
-GPR_ATTRIBUTE_ALWAYS_INLINE_FUNCTION inline Poll<Empty>
+GPR_ATTRIBUTE_ALWAYS_INLINE_FUNCTION Poll<Empty>
 CallState::PollServerTrailingMetadataAvailable() {
   GRPC_TRACE_LOG(call_state, INFO)
       << "[call_state] PollServerTrailingMetadataAvailable: "

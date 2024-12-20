@@ -30,13 +30,13 @@ namespace promise_detail {
 
 // Convert with a move the input status to an absl::Status.
 template <typename T>
-GPR_ATTRIBUTE_ALWAYS_INLINE_FUNCTION inline absl::Status IntoStatus(
+GPR_ATTRIBUTE_ALWAYS_INLINE_FUNCTION absl::Status IntoStatus(
     absl::StatusOr<T>* status) {
   return std::move(status->status());
 }
 
 // Convert with a move the input status to an absl::Status.
-GPR_ATTRIBUTE_ALWAYS_INLINE_FUNCTION inline absl::Status IntoStatus(
+GPR_ATTRIBUTE_ALWAYS_INLINE_FUNCTION absl::Status IntoStatus(
     absl::Status* status) {
   return std::move(*status);
 }
@@ -46,13 +46,13 @@ GPR_ATTRIBUTE_ALWAYS_INLINE_FUNCTION inline absl::Status IntoStatus(
 // Return true if the status represented by the argument is ok, false if not.
 // By implementing this function for other, non-absl::Status types, those types
 // can participate in TrySeq as result types that affect control flow.
-GPR_ATTRIBUTE_ALWAYS_INLINE_FUNCTION inline bool IsStatusOk(
+GPR_ATTRIBUTE_ALWAYS_INLINE_FUNCTION bool IsStatusOk(
     const absl::Status& status) {
   return status.ok();
 }
 
 template <typename T>
-GPR_ATTRIBUTE_ALWAYS_INLINE_FUNCTION inline bool IsStatusOk(
+GPR_ATTRIBUTE_ALWAYS_INLINE_FUNCTION bool IsStatusOk(
     const absl::StatusOr<T>& status) {
   return status.ok();
 }
@@ -103,7 +103,7 @@ struct StatusCastImpl<absl::Status, const absl::StatusOr<T>&> {
 // For cases where the status is guaranteed to be a failure (and hence not
 // needing to preserve values) see FailureStatusCast<> below.
 template <typename To, typename From>
-GPR_ATTRIBUTE_ALWAYS_INLINE_FUNCTION inline To StatusCast(From&& from) {
+GPR_ATTRIBUTE_ALWAYS_INLINE_FUNCTION To StatusCast(From&& from) {
   return StatusCastImpl<To, From>::Cast(std::forward<From>(from));
 }
 
@@ -127,7 +127,7 @@ struct FailureStatusCastImpl<absl::StatusOr<T>, const absl::Status&> {
 };
 
 template <typename To, typename From>
-GPR_ATTRIBUTE_ALWAYS_INLINE_FUNCTION inline To FailureStatusCast(From&& from) {
+GPR_ATTRIBUTE_ALWAYS_INLINE_FUNCTION To FailureStatusCast(From&& from) {
   DCHECK(!IsStatusOk(from));
   return FailureStatusCastImpl<To, From>::Cast(std::forward<From>(from));
 }

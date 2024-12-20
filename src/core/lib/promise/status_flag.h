@@ -41,10 +41,10 @@ struct Success {
   }
 };
 
-GPR_ATTRIBUTE_ALWAYS_INLINE_FUNCTION inline bool IsStatusOk(Failure) {
+GPR_ATTRIBUTE_ALWAYS_INLINE_FUNCTION bool IsStatusOk(Failure) {
   return false;
 }
-GPR_ATTRIBUTE_ALWAYS_INLINE_FUNCTION inline bool IsStatusOk(Success) {
+GPR_ATTRIBUTE_ALWAYS_INLINE_FUNCTION bool IsStatusOk(Success) {
   return true;
 }
 
@@ -115,41 +115,41 @@ class StatusFlag {
   bool value_;
 };
 
-GPR_ATTRIBUTE_ALWAYS_INLINE_FUNCTION inline bool operator==(StatusFlag flag,
+GPR_ATTRIBUTE_ALWAYS_INLINE_FUNCTION bool operator==(StatusFlag flag,
                                                             Failure) {
   return !flag.ok();
 }
-GPR_ATTRIBUTE_ALWAYS_INLINE_FUNCTION inline bool operator==(Failure,
+GPR_ATTRIBUTE_ALWAYS_INLINE_FUNCTION bool operator==(Failure,
                                                             StatusFlag flag) {
   return !flag.ok();
 }
-GPR_ATTRIBUTE_ALWAYS_INLINE_FUNCTION inline bool operator==(StatusFlag flag,
+GPR_ATTRIBUTE_ALWAYS_INLINE_FUNCTION bool operator==(StatusFlag flag,
                                                             Success) {
   return flag.ok();
 }
-GPR_ATTRIBUTE_ALWAYS_INLINE_FUNCTION inline bool operator==(Success,
+GPR_ATTRIBUTE_ALWAYS_INLINE_FUNCTION bool operator==(Success,
                                                             StatusFlag flag) {
   return flag.ok();
 }
 
-GPR_ATTRIBUTE_ALWAYS_INLINE_FUNCTION inline bool operator!=(StatusFlag flag,
+GPR_ATTRIBUTE_ALWAYS_INLINE_FUNCTION bool operator!=(StatusFlag flag,
                                                             Failure) {
   return flag.ok();
 }
-GPR_ATTRIBUTE_ALWAYS_INLINE_FUNCTION inline bool operator!=(Failure,
+GPR_ATTRIBUTE_ALWAYS_INLINE_FUNCTION bool operator!=(Failure,
                                                             StatusFlag flag) {
   return flag.ok();
 }
-GPR_ATTRIBUTE_ALWAYS_INLINE_FUNCTION inline bool operator!=(StatusFlag flag,
+GPR_ATTRIBUTE_ALWAYS_INLINE_FUNCTION bool operator!=(StatusFlag flag,
                                                             Success) {
   return !flag.ok();
 }
-GPR_ATTRIBUTE_ALWAYS_INLINE_FUNCTION inline bool operator!=(Success,
+GPR_ATTRIBUTE_ALWAYS_INLINE_FUNCTION bool operator!=(Success,
                                                             StatusFlag flag) {
   return !flag.ok();
 }
 
-GPR_ATTRIBUTE_ALWAYS_INLINE_FUNCTION inline bool IsStatusOk(
+GPR_ATTRIBUTE_ALWAYS_INLINE_FUNCTION bool IsStatusOk(
     const StatusFlag& flag) {
   return flag.ok();
 }
@@ -300,13 +300,13 @@ inline std::ostream& operator<<(std::ostream& os,
 }
 
 template <typename T>
-GPR_ATTRIBUTE_ALWAYS_INLINE_FUNCTION inline bool IsStatusOk(
+GPR_ATTRIBUTE_ALWAYS_INLINE_FUNCTION bool IsStatusOk(
     const ValueOrFailure<T>& value) {
   return value.ok();
 }
 
 template <typename T>
-GPR_ATTRIBUTE_ALWAYS_INLINE_FUNCTION inline T TakeValue(
+GPR_ATTRIBUTE_ALWAYS_INLINE_FUNCTION T TakeValue(
     ValueOrFailure<T>&& value) {
   return std::move(value.value());
 }
