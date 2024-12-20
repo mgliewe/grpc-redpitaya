@@ -1,5 +1,13 @@
 # gRPC – An RPC library and framework
 
+---
+
+### This is an internal ninja-patched repo to cross build grpc, not ment for redistibution.
+### refer to README.redpitaya for build instructions
+
+---
+
+
 gRPC is a modern, open source, high-performance remote procedure call (RPC)
 framework that can run anywhere. gRPC enables client and server applications to
 communicate transparently, and simplifies the building of connected systems.
